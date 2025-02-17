@@ -2,8 +2,8 @@ package rayan.userservice.mapper;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import rayan.userservice.core.enums.RoleType;
-import rayan.userservice.dto.UserInsertDTO;
-import rayan.userservice.dto.UserReadOnlyDTO;
+import rayan.userservice.dto.user.UserInsertDTO;
+import rayan.userservice.dto.user.UserReadOnlyDTO;
 import rayan.userservice.entity.User;
 import rayan.userservice.security.PasswordUtil;
 
