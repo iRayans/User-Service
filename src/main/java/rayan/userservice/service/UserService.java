@@ -2,9 +2,11 @@ package rayan.userservice.service;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
+import rayan.userservice.core.excpetion.AppServerException;
 import rayan.userservice.dao.UserDAO;
-import rayan.userservice.dto.UserInsertDTO;
-import rayan.userservice.dto.UserReadOnlyDTO;
+import rayan.userservice.dto.user.UserInsertDTO;
+import rayan.userservice.dto.user.UserReadOnlyDTO;
 import rayan.userservice.entity.User;
 import rayan.userservice.mapper.Mapper;
 
@@ -16,7 +18,8 @@ public class UserService {
     @Inject
     Mapper mapper;
 
-    public UserReadOnlyDTO createUser(UserInsertDTO userInsertDTO){
+    @Transactional
+    public UserReadOnlyDTO createUser(UserInsertDTO userInsertDTO) throws AppServerException {
         // Default Role "USER"
         if (userInsertDTO.getRole() == null){
             userInsertDTO.setRole("USER");
@@ -25,6 +28,10 @@ public class UserService {
 
         return userDAO.create(user)
                 .map(mapper::mapToUserReadOnlyDTO)
-                .orElse(null);
+                .orElseThrow(() -> new AppServerException("User ", "User with email: " + userInsertDTO.getEmail() + "not inserted."));
+    }
+
+    public boolean isEmailExist(String email){
+        return userDAO.emailExists(email);
     }
 }

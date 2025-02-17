@@ -1,4 +1,4 @@
-package rayan.userservice.dto;
+package rayan.userservice.dto.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
