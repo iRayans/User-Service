@@ -19,15 +19,10 @@ public class UserDAO {
     @PersistenceContext // automatically injects an instance of the EntityManager into the class
     private EntityManager em;
 
-    //    @Transactional
     public Optional<User> create(User user) {
-        if (user.getCreatedAt() == null) {
-            user.setCreatedAt(LocalDateTime.now());
-        }
-        user.setUpdatedAt(LocalDateTime.now());
-
         try {
             em.persist(user);
+            em.flush();  // Force Hibernate to assign an ID immediately.
             return Optional.of(user);
         } catch (EntityExistsException e) {
             throw new EntityExistsException(e.getMessage());
