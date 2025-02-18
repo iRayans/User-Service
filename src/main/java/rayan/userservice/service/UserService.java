@@ -10,8 +10,13 @@ import rayan.userservice.dto.user.UserReadOnlyDTO;
 import rayan.userservice.entity.User;
 import rayan.userservice.mapper.Mapper;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+
 @ApplicationScoped
 public class UserService {
+    private static final Logger LOGGER = LogManager.getLogger(UserService.class.getName());
 
     @Inject
     UserDAO userDAO;
@@ -20,18 +25,21 @@ public class UserService {
 
     @Transactional
     public UserReadOnlyDTO createUser(UserInsertDTO userInsertDTO) throws AppServerException {
+        LOGGER.info("Creating user...");
         // Default Role "USER"
-        if (userInsertDTO.getRole() == null){
+        if (userInsertDTO.getRole() == null) {
             userInsertDTO.setRole("USER");
         }
         User user = mapper.mapToUser(userInsertDTO);
 
-        return userDAO.create(user)
+        UserReadOnlyDTO userReadOnlyDTO = userDAO.create(user)
                 .map(mapper::mapToUserReadOnlyDTO)
                 .orElseThrow(() -> new AppServerException("User ", "User with email: " + userInsertDTO.getEmail() + "not inserted."));
+        LOGGER.info("User {} created successfully", userReadOnlyDTO.getName());
+        return userReadOnlyDTO;
     }
 
-    public boolean isEmailExist(String email){
+    public boolean isEmailExist(String email) {
         return userDAO.emailExists(email);
     }
 }
