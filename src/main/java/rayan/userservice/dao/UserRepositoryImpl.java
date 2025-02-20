@@ -8,17 +8,16 @@ import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
 import rayan.userservice.entity.User;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @ApplicationScoped
-public class UserDAO {
+public class UserRepositoryImpl implements UserRepository {
 
     @PersistenceContext // automatically injects an instance of the EntityManager into the class
     private EntityManager em;
 
+    @Override
     public Optional<User> create(User user) {
         try {
             em.persist(user);
@@ -29,15 +28,18 @@ public class UserDAO {
         }
     }
 
+    @Override
     public List<User> findAll() {
         return em.createQuery("SELECT c FROM User c", User.class).getResultList();
     }
 
+    @Override
     public Optional<User> findById(Long id) {
         return Optional.ofNullable(em.find(User.class, id));
     }
 
     @Transactional
+    @Override
     public void delete(Long id) {
         var User = findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid User Id:" + id));
@@ -45,11 +47,13 @@ public class UserDAO {
     }
 
     @Transactional
+    @Override
     public User update(User User) {
         return em.merge(User);
     }
 
 
+    @Override
     public boolean emailExists(String email) {
         String jpql = "SELECT COUNT(e) FROM User e WHERE e.email = :email";
 

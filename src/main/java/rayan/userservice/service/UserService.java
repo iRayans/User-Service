@@ -4,7 +4,8 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import rayan.userservice.core.excpetion.AppServerException;
-import rayan.userservice.dao.UserDAO;
+import rayan.userservice.dao.UserRepository;
+import rayan.userservice.dao.UserRepositoryImpl;
 import rayan.userservice.dto.user.UserInsertDTO;
 import rayan.userservice.dto.user.UserReadOnlyDTO;
 import rayan.userservice.entity.User;
@@ -19,7 +20,7 @@ public class UserService {
     private static final Logger LOGGER = LogManager.getLogger(UserService.class.getName());
 
     @Inject
-    UserDAO userDAO;
+    UserRepository userRepo;
     @Inject
     Mapper mapper;
 
@@ -32,7 +33,7 @@ public class UserService {
         }
         User user = mapper.mapToUser(userInsertDTO);
 
-        UserReadOnlyDTO userReadOnlyDTO = userDAO.create(user)
+        UserReadOnlyDTO userReadOnlyDTO = userRepo.create(user)
                 .map(mapper::mapToUserReadOnlyDTO)
                 .orElseThrow(() -> new AppServerException("User ", "User with email: " + userInsertDTO.getEmail() + "not inserted."));
         LOGGER.info("User {} created successfully", userReadOnlyDTO.getName());
@@ -40,6 +41,6 @@ public class UserService {
     }
 
     public boolean isEmailExist(String email) {
-        return userDAO.emailExists(email);
+        return userRepo.emailExists(email);
     }
 }
