@@ -64,5 +64,12 @@ public class UserDAOImpl implements UserDAO {
             return false;
         }
     }
+
+    @Override
+    public boolean existsById(Long id) {
+        return em.createQuery("SELECT COUNT(u) FROM User u WHERE u.id = :id", Long.class)
+                .setParameter("id", id)
+                .getSingleResult() > 0;
+    }
 }
 

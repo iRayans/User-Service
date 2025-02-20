@@ -14,4 +14,5 @@ public interface UserDAO {
     void delete(Long id);
     User update(User user);
     boolean emailExists(String email);
+    boolean existsById(Long id);
 }

@@ -16,4 +16,6 @@ public interface UserService {
     List<UserReadOnlyDTO> getAllUsers();
 
     UserReadOnlyDTO getUserById(Long id) throws EntityNotFoundException;
+
+   void deleteUserById(Long id) throws EntityNotFoundException;
 }

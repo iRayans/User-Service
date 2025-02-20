@@ -34,4 +34,11 @@ public class UserResource {
                 .entity(userReadOnlyDTO)
                 .build();
     }
+
+    @DELETE
+    @Path("/{id}")
+    public Response deleteUser(@PathParam("id") Long id) throws EntityNotFoundException {
+        userService.deleteUserById(id);
+        return Response.ok().build();
+    }
 }

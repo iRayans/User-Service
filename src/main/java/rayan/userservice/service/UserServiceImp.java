@@ -4,7 +4,6 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import rayan.userservice.core.excpetion.AppServerException;
-import rayan.userservice.core.excpetion.EntityAlreadyExistsException;
 import rayan.userservice.core.excpetion.EntityNotFoundException;
 import rayan.userservice.dao.UserDAO;
 import rayan.userservice.dto.user.UserInsertDTO;
@@ -16,7 +15,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 
@@ -65,6 +63,15 @@ public class UserServiceImp implements UserService {
         return userDAO.findById(id)
                 .map(mapper::mapToUserReadOnlyDTO)
                 .orElseThrow(() -> new EntityNotFoundException("User", "User with id " + id + " was not found."));
+    }
+
+    @Override
+    public void deleteUserById(Long id) throws EntityNotFoundException {
+        LOGGER.info("Deleting user by id...");
+        if(!userDAO.existsById(id)) {
+            throw new EntityNotFoundException("User", "User with id " + id + " was not found.");
+        }
+        userDAO.delete(id);
     }
 
 }
