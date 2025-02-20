@@ -19,7 +19,7 @@ import rayan.userservice.service.UserService;
 public class AuthenticationResource {
 
     @Inject
-    UserService userService;
+    UserService userServiceImp;
     @Inject
     ValidatorUtil validatorUtil;
     @POST
@@ -31,7 +31,7 @@ public class AuthenticationResource {
         // Validation
         validatorUtil.validateDTO(userInsertDTO);
 
-        UserReadOnlyDTO userReadOnlyDTO = userService.createUser(userInsertDTO);
+        UserReadOnlyDTO userReadOnlyDTO = userServiceImp.createUser(userInsertDTO);
         return Response.status(Response.Status.CREATED)
                 .entity(userReadOnlyDTO)
                 .build();
