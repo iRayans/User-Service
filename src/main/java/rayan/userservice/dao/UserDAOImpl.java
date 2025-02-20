@@ -1,30 +1,28 @@
 package rayan.userservice.dao;
 
 import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.persistence.EntityExistsException;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.NoResultException;
-import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.*;
 import jakarta.transaction.Transactional;
+import rayan.userservice.core.excpetion.AppServerException;
 import rayan.userservice.entity.User;
 
 import java.util.List;
 import java.util.Optional;
 
 @ApplicationScoped
-public class UserRepositoryImpl implements UserRepository {
+public class UserDAOImpl implements UserDAO {
 
     @PersistenceContext // automatically injects an instance of the EntityManager into the class
     private EntityManager em;
 
     @Override
-    public Optional<User> create(User user) {
+    public Optional<User> create(User user) throws AppServerException {
         try {
             em.persist(user);
             em.flush();  // Force Hibernate to assign an ID immediately.
             return Optional.of(user);
-        } catch (EntityExistsException e) {
-            throw new EntityExistsException(e.getMessage());
+        }catch (PersistenceException e) {
+            throw new AppServerException("Database Error", "Failed to insert user "+ e.getMessage());
         }
     }
 
@@ -41,9 +39,9 @@ public class UserRepositoryImpl implements UserRepository {
     @Transactional
     @Override
     public void delete(Long id) {
-        var User = findById(id)
+        User user = findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid User Id:" + id));
-        em.remove(User);
+        em.remove(user);
     }
 
     @Transactional
