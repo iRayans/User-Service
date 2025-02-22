@@ -88,3 +88,11 @@ public class UserDAOImpl implements UserDAO {
         }
     }
 
+    @Override
+    public Optional<User> findUserByUserEmail(String email) {
+        User user = em.createQuery("SELECT e FROM User e WHERE e.email = :email", User.class)
+                .setParameter("email", email)
+                .getSingleResult();
+        return Optional.ofNullable(user);
+    }
+}
