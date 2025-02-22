@@ -85,7 +85,7 @@ public class JwtAuthenticationFilter implements ContainerRequestFilter {
 
     // Checks if a path belongs to public paths
     private boolean isPublicPath(String path) {
-        System.out.println("Path: " + path);
+        LOGGER.debug("Checking path {} ", path);
         return PUBLIC_PATHS.stream().anyMatch(path::startsWith);
     }
 }

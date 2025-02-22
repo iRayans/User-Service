@@ -21,7 +21,6 @@
                 databaseName="user_service"
                 user="root"
                 password="Password1">
-<!--            <connectionProperties.mysql authenticationPlugin="caching_sha2_password"/>-->
         </properties>
     </dataSource>
     <basicRegistry id="basic" realm="BasicRealm">
