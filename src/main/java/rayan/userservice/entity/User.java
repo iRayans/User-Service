@@ -3,6 +3,8 @@ package rayan.userservice.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import rayan.userservice.core.enums.RoleType;
+
+import java.security.Principal;
 import java.time.LocalDateTime;
 
 @AllArgsConstructor
@@ -12,7 +14,7 @@ import java.time.LocalDateTime;
 @ToString
 @Entity
 @Table(name = "users")
-public class User {
+public class User implements Principal {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,5 +33,8 @@ public class User {
     private LocalDateTime updatedAt;
 
 
-
+    @Override
+    public String getName() {
+        return username;
+    }
 }
