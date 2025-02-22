@@ -28,11 +28,12 @@ A **lightweight** and **ready-to-use** user authentication service built with **
 
 ### **API Endpoints**
 
-| Method  | Endpoint        | Description               | Auth Required |
-|---------|----------------|---------------------------|------------|
-|  **POST**  | `/auth/register` |  Register a new user     |  No       |
-|  **POST**  | `/auth/login`    |  Authenticate & return JWT |  No       |
-|  **GET**   | `/users/{id}`    |  Get user by ID          | Yes (Admin) |
-|  **DELETE** | `/users/{id}`    |  Delete user              | Yes (Admin) |
+| Method  | Endpoint    | Description               | Auth Required |
+|---------|-------------|---------------------------|------------|
+|  **POST**  | `/auth/register` | Register a new user       |  No       |
+|  **POST**  | `/auth/login` | Authenticate & return JWT |  No       |
+|  **GET**   | `/users`    | Get All users             | Yes (Admin) |
+|  **GET**   | `/users/{id}` | Get user by ID            | Yes (Admin) |
+|  **DELETE** | `/users/{id}` | Delete user               | Yes (Admin) |
 
 💡 **Use Postman or `curl` to test the endpoints.**
