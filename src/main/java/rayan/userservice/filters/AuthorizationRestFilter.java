@@ -1,7 +1,6 @@
 package rayan.userservice.filters;
 
 import jakarta.annotation.Priority;
-import jakarta.ws.rs.NotAuthorizedException;
 import jakarta.ws.rs.Priorities;
 import jakarta.ws.rs.WebApplicationException;
 import jakarta.ws.rs.container.ContainerRequestContext;
