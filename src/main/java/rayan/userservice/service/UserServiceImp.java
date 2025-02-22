@@ -74,4 +74,17 @@ public class UserServiceImp implements UserService {
         userDAO.delete(id);
     }
 
+    @Override
+    public boolean isUserValid(String email, String plainPassword)  {
+       return userDAO.isUserValid(email, plainPassword);
+
+    }
+
+    @Override
+    public UserReadOnlyDTO findUserByEmail(String email) throws EntityNotFoundException {
+        return userDAO.findUserByUserEmail(email)
+                .map(mapper::mapToUserReadOnlyDTO)
+                .orElseThrow(() -> new EntityNotFoundException("User", " with email " + email + " was not found."));
+    }
+
 }

@@ -17,5 +17,9 @@ public interface UserService {
 
     UserReadOnlyDTO getUserById(Long id) throws EntityNotFoundException;
 
-   void deleteUserById(Long id) throws EntityNotFoundException;
+    void deleteUserById(Long id) throws EntityNotFoundException;
+
+    boolean isUserValid(String email, String plainPassword);
+
+    UserReadOnlyDTO findUserByEmail(String email) throws EntityNotFoundException;
 }
