@@ -15,4 +15,6 @@ public interface UserDAO {
     User update(User user);
     boolean emailExists(String email);
     boolean existsById(Long id);
+    boolean isUserValid(String email, String plainPassword );
+    Optional<User> findUserByUserEmail(String email);
 }

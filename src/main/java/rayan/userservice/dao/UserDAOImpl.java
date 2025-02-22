@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import jakarta.transaction.Transactional;
 import rayan.userservice.core.excpetion.AppServerException;
 import rayan.userservice.entity.User;
+import rayan.userservice.security.PasswordUtil;
 
 import java.util.List;
 import java.util.Optional;
@@ -21,8 +22,8 @@ public class UserDAOImpl implements UserDAO {
             em.persist(user);
             em.flush();  // Force Hibernate to assign an ID immediately.
             return Optional.of(user);
-        }catch (PersistenceException e) {
-            throw new AppServerException("Database Error", "Failed to insert user "+ e.getMessage());
+        } catch (PersistenceException e) {
+            throw new AppServerException("Database Error", "Failed to insert user " + e.getMessage());
         }
     }
 
@@ -71,5 +72,19 @@ public class UserDAOImpl implements UserDAO {
                 .setParameter("id", id)
                 .getSingleResult() > 0;
     }
-}
+
+    @Override
+    public boolean isUserValid(String email, String plainPassword) {
+        String jpql = "SELECT e FROM User e WHERE e.email = :email";
+
+        try {
+            User user = em.createQuery(jpql, User.class)
+                    .setParameter("email", email)
+                    .getSingleResult();
+            return PasswordUtil.checkPassword(plainPassword, user.getPassword());
+
+        } catch (NoResultException e) {
+            return false;
+        }
+    }
 
