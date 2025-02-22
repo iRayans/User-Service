@@ -36,4 +36,3 @@ A **lightweight** and **ready-to-use** user authentication service built with **
 |  **GET**   | `/users/{id}` | Get user by ID            | Yes (Admin) |
 |  **DELETE** | `/users/{id}` | Delete user               | Yes (Admin) |
 
-💡 **Use Postman or `curl` to test the endpoints.**
