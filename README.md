@@ -17,10 +17,22 @@ A **lightweight** and **ready-to-use** user authentication service built with **
 
 ## 🛠 Tech Stack
 
-- 🏗 **Jakarta EE 10** (JAX-RS, CDI, JPA)
-- 🔐 **JWT Authentication** (Custom security filters)
-- 🗄️ **MySQL & Hibernate ORM**
-- 📜 **Log4j** for logging
-- 🔑 **Bcrypt** for password hashing
+- **Jakarta EE 10** (JAX-RS, CDI, JPA)
+- **JWT Authentication** (Custom security filters)
+- **MySQL & Hibernate ORM**
+- **Log4j** for logging
+- **Bcrypt** for password hashing
+- **Open Liberty** as the application server
 
 ---
+
+### **4️⃣ API Endpoints**
+
+| Method  | Endpoint        | Description                | Auth Required |
+|---------|----------------|----------------------------|--------------|
+| 🔹 **POST**  | `/auth/register` | 📝 Register a new user      | ❌ No        |
+| 🔹 **POST**  | `/auth/login`    | 🔐 Authenticate & return JWT | ❌ No        |
+| 🔹 **GET**   | `/users/{id}`    | 🔎 Get user by ID           | ✅ Yes (Admin) |
+| 🔹 **DELETE** | `/users/{id}`    | ❌ Delete user              | ✅ Yes (Admin) |
+
+💡 **Use Postman or `curl` to test the endpoints.**
