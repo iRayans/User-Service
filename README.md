@@ -4,18 +4,18 @@ A **lightweight** and **ready-to-use** user authentication service built with **
 
 ---
 
-## 🚀 Features
+## Features
 
-✔️ **User Authentication** –  Secure login with JWT token generation  
-✔️ **Role-Based Access Control** –  Restrict access using `ADMIN` and `USER` roles  
-✔️ **Security Filters** –  Implements authentication & authorization filters  
-✔️ **Database Integration** –  Uses MySQL with Hibernate JPA  
-✔️ **Configuration Management** –  Loads settings from `config.properties`  
-✔️ **Logging** – Log4j for structured application logging
+✔ **User Authentication** –  Secure login with JWT token generation  
+✔ **Role-Based Access Control** –  Restrict access using `ADMIN` and `USER` roles  
+✔ **Security Filters** –  Implements authentication & authorization filters  
+✔ **Database Integration** –  Uses MySQL with Hibernate JPA  
+✔ **Configuration Management** –  Loads settings from `config.properties`  
+✔ **Logging** – Log4j for structured application logging
 
 ---
 
-## 🛠 Tech Stack
+## Tech Stack
 
 - **Jakarta EE 10** (JAX-RS, CDI, JPA)
 - **JWT Authentication** (Custom security filters)
